@@ -102,6 +102,9 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-4xl font-black text-gray-900 mb-8">Read These</h2>
             <div className="space-y-4">
+              <Link href="/blog/the-northern-star" className="block text-pink-600 hover:text-pink-700 text-lg">
+                The Northern Star
+              </Link>
               <Link href="/blog/what-is-css" className="block text-pink-600 hover:text-pink-700 text-lg">
                 What Is CSS?
               </Link>
@@ -141,4 +144,40 @@ export async function generateStaticParams() {
   return Object.keys(blogPosts).map((slug) => ({
     slug,
   }));
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const post = blogPosts[slug];
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  const baseUrl = 'https://bingbangboom.org';
+  const canonicalUrl = `${baseUrl}/blog/${slug}/`;
+
+  return {
+    title: post.title,
+    description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+      url: canonicalUrl,
+      siteName: 'BingBangBoom',
+      type: 'article',
+      publishedTime: new Date(post.date).toISOString(),
+      authors: [post.author],
+    },
+    twitter: {
+      card: 'summary',
+      title: post.title,
+      description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+    },
+  };
 }

@@ -39,6 +39,9 @@ export default function Home() {
             <div className="max-w-4xl mx-auto px-6">
               <h2 className="text-3xl font-bold text-black mb-6">Read These</h2>
               <div className="space-y-3">
+                <Link href="/blog/the-northern-star" className="block text-red-600 hover:text-red-700 text-lg">
+                  The Northern Star
+                </Link>
                 <Link href="/blog/what-is-css" className="block text-red-600 hover:text-red-700 text-lg">
                   What Is CSS?
                 </Link>
