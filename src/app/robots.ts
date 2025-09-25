@@ -71,6 +71,7 @@ export default function robots(): MetadataRoute.Robots {
     {
       userAgent: '*',
       allow: '/',
+      disallow: '/_next/',
     },
     // Block specific bots
     ...blockedBots.map(bot => ({
@@ -81,14 +82,17 @@ export default function robots(): MetadataRoute.Robots {
     {
       userAgent: 'Googlebot',
       allow: '/',
+      disallow: '/_next/',
     },
     {
       userAgent: 'Bingbot',
       allow: '/',
+      disallow: '/_next/',
     },
     {
       userAgent: 'Mozilla',
       allow: '/',
+      disallow: '/_next/',
     }
   ];
 
