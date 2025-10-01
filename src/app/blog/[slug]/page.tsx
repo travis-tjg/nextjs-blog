@@ -58,9 +58,10 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="bg-blue-400 text-white py-16">
           <div className="max-w-4xl mx-auto px-6">
             <div className="prose prose-lg prose-invert max-w-none">
-              <div className="text-lg leading-relaxed whitespace-pre-line">
-                {post.content}
-              </div>
+              <div
+                className="text-lg leading-relaxed whitespace-pre-line"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
             </div>
           </div>
         </section>
