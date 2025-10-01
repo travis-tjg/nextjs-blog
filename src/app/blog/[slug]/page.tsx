@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             </div>
             <h1 className="text-5xl font-black text-gray-900 mb-6">{post.title}</h1>
             <p className="text-lg text-gray-600 mb-4">A 301 is a permanent redirect of one URL to another.</p>
-            
+
             <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
@@ -58,10 +58,9 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="bg-blue-400 text-white py-16">
           <div className="max-w-4xl mx-auto px-6">
             <div className="prose prose-lg prose-invert max-w-none">
-              <div 
-                className="text-lg leading-relaxed whitespace-pre-line"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+              <div className="text-lg leading-relaxed whitespace-pre-line">
+                {post.content}
+              </div>
             </div>
           </div>
         </section>
@@ -78,7 +77,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               ) : (
                 <div></div>
               )}
-              
+
               {nextPost ? (
                 <Link href={`/blog/${nextPost}`} className="flex items-center space-x-2 hover:underline">
                   <span>{blogPosts[nextPost].title}</span>
@@ -103,9 +102,6 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-4xl font-black text-gray-900 mb-8">Read These</h2>
             <div className="space-y-4">
-              <Link href="/blog/the-northern-star" className="block text-pink-600 hover:text-pink-700 text-lg">
-                The Northern Star
-              </Link>
               <Link href="/blog/what-is-css" className="block text-pink-600 hover:text-pink-700 text-lg">
                 What Is CSS?
               </Link>
@@ -145,40 +141,4 @@ export async function generateStaticParams() {
   return Object.keys(blogPosts).map((slug) => ({
     slug,
   }));
-}
-
-export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
-  const post = blogPosts[slug];
-
-  if (!post) {
-    return {
-      title: 'Post Not Found',
-    };
-  }
-
-  const baseUrl = 'https://bingbangboom.org';
-  const canonicalUrl = `${baseUrl}/blog/${slug}/`;
-
-  return {
-    title: post.title,
-    description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: post.title,
-      description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-      url: canonicalUrl,
-      siteName: 'BingBangBoom',
-      type: 'article',
-      publishedTime: new Date(post.date).toISOString(),
-      authors: [post.author],
-    },
-    twitter: {
-      card: 'summary',
-      title: post.title,
-      description: post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-    },
-  };
 }
