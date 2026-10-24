@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts } from "@/data/blogPosts";
+import discoveryPosts from "@/data/discoveryPosts.json";
 import Navigation from "@/components/Navigation";
 import SocialLinks from "@/components/SocialLinks";
 
@@ -41,7 +42,9 @@ export default async function BlogPostPage({ params }: PageProps) {
               </span>
             </div>
             <h1 className="text-5xl font-black text-gray-900 mb-6">{post.title}</h1>
-            <p className="text-lg text-gray-600 mb-4">A 301 is a permanent redirect of one URL to another.</p>
+            {!(slug in discoveryPosts) && (
+              <p className="text-lg text-gray-600 mb-4">A 301 is a permanent redirect of one URL to another.</p>
+            )}
 
             <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
