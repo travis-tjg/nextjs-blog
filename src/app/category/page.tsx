@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
+
+
+export const metadata: Metadata = { title: "Categories", alternates: { canonical: "/category/" } };
 
 export default function CategoryPage() {
   // Get all unique categories and their post counts

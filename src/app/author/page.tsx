@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
+
+
+export const metadata: Metadata = { title: "Author", alternates: { canonical: "/author/" } };
 
 export default function AuthorPage() {
   // Filter posts by admin author and sort by date (newest first)

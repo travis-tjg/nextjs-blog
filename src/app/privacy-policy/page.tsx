@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
+
+
+export const metadata: Metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy-policy/" } };
 
 export default function PrivacyPolicyPage() {
   return (

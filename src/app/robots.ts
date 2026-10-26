@@ -98,6 +98,10 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules,
-    sitemap: 'https://bingbangboom.org/sitemap.xml',
+    sitemap: [
+      'https://bingbangboom.org/sitemap.xml',
+      'https://bingbangboom.org/post-sitemap.xml',
+      'https://bingbangboom.org/page-sitemap.xml',
+    ],
   };
 }

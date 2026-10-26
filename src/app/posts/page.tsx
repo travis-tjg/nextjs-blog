@@ -1,7 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
 import SocialLinks from "@/components/SocialLinks";
+
+
+export const metadata: Metadata = { title: "Index", alternates: { canonical: "/posts/" } };
 
 export default function IndexPage() {
   // Convert blogPosts object to array and sort by date (newest first)

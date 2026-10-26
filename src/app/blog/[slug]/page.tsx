@@ -1,12 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts } from "@/data/blogPosts";
 import discoveryPosts from "@/data/discoveryPosts.json";
 import Navigation from "@/components/Navigation";
 import SocialLinks from "@/components/SocialLinks";
+import { SITE_NAME, SITE_URL, excerpt, postUrl } from "@/lib/site";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = blogPosts[slug];
+  if (!post) return {};
+  const description = excerpt(post.content);
+  return {
+    title: post.title,
+    description,
+    alternates: { canonical: postUrl(slug) },
+    openGraph: { type: "article", title: post.title, description, url: postUrl(slug), publishedTime: new Date(post.date).toISOString() },
+  };
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
@@ -28,8 +43,20 @@ export default async function BlogPostPage({ params }: PageProps) {
   const previousPost = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
   const nextPost = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: excerpt(post.content),
+    datePublished: new Date(post.date).toISOString(),
+    author: { "@type": "Person", name: post.author },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL + "/" },
+    mainEntityOfPage: postUrl(slug),
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
       <Navigation />
 
       <main>
